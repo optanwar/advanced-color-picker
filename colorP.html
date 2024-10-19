@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Picker Integration</title>
+
+  <!-- One of the following themes -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/> <!-- 'classic' theme -->
+
+  <style>
+    .pickr-container {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <section class="container">
+    <input type="text" class="pickr" placeholder="Pick a color" readonly> <!-- Color input field -->
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.0/dist/pickr.min.js"></script> <!-- Pickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js"></script>
+  <script>
+    const inputElement = document.querySelector('.pickr');
+
+    const pickr = new Pickr({
+      el: inputElement,
+      useAsButton: true,  // Allows using input as a button to trigger the color picker
+      default: '#42445A', // Default color
+      theme: 'classic',   // Theme you want to use
+
+      // Predefined color swatches
+      swatches: [
+        'rgba(244, 67, 54, 1)',
+        'rgba(233, 30, 99, 0.95)',
+        'rgba(156, 39, 176, 0.9)',
+        'rgba(103, 58, 183, 0.85)',
+        'rgba(63, 81, 181, 0.8)',
+        'rgba(33, 150, 243, 0.75)',
+        'rgba(3, 169, 244, 0.7)',
+        'rgba(0, 188, 212, 0.7)',
+        'rgba(0, 150, 136, 0.75)',
+        'rgba(76, 175, 80, 0.8)',
+        'rgba(139, 195, 74, 0.85)',
+        'rgba(205, 220, 57, 0.9)',
+        'rgba(255, 235, 59, 0.95)',
+        'rgba(255, 193, 7, 1)'
+      ],
+
+      // Color picker components
+      components: {
+        // Color preview
+        preview: true,
+
+        // Opacity slider
+        opacity: true,
+
+        // Hue slider
+        hue: true,
+
+        // Input/output options
+        interaction: {
+            hex: true,
+            rgba: true,
+            
+            input: true,
+            save: true,
+            clear: true,
+        }
+      }
+    }).on('init', pickr => {
+      inputElement.value = pickr.getSelectedColor().toRGBA().toString(0);  // Set initial color
+    }).on('save', color => {
+      inputElement.value = color.toRGBA().toString(0);  // Save color value in input
+      pickr.hide();  // Hide the picker after saving
+    });
+
+  </script>
+</body>
+</html>
